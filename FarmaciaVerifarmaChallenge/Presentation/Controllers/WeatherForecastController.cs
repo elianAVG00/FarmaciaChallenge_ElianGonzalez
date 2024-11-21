@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace FarmaciaVerifarmaChallenge.Controllers
+namespace FarmaciaVerifarmaChallenge.Presentation.Controllers
 {
     [ApiController]
     [Route("[controller]")]
