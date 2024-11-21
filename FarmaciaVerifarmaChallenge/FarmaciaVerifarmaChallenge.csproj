@@ -16,9 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Interfaces\" />
-    <Folder Include="Application\Services\" />
-    <Folder Include="Infraestructure\Persistence\Repositories\" />
     <Folder Include="Presentation\Controllers\" />
   </ItemGroup>
 
