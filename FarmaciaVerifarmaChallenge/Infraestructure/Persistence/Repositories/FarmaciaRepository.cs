@@ -1,5 +1,6 @@
 ﻿using FarmaciaVerifarmaChallenge.Application.Interfaces;
 using FarmaciaVerifarmaChallenge.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Repositories
 {
@@ -12,34 +13,34 @@ namespace FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Repositories
             this._db = db;
         }
 
-        public void AddFarmacia(Farmacia Farmacia)
+        public async Task AddFarmacia(Farmacia Farmacia)
         {
-            _db.Farmacias.Add(Farmacia);
-            _db.SaveChanges();
+            await _db.Farmacias.AddAsync(Farmacia);
+            await _db.SaveChangesAsync();
         }
 
-        public void DeleteFarmacia(int FarmaciaId)
+        public async Task DeleteFarmacia(int FarmaciaId)
         {
-            var Farmacia = _db.Farmacias.Find(FarmaciaId);
+            var Farmacia = await _db.Farmacias.FindAsync(FarmaciaId);
             if (Farmacia == null) return;
 
-            _db.Farmacias.Remove(Farmacia);
-            _db.SaveChanges();
+            _db.Farmacias.Remove(Farmacia); 
+            await _db.SaveChangesAsync();
         }
 
-        public IEnumerable<Farmacia> GetCategories()
+        public async Task<IEnumerable<Farmacia>> GetCategories()
         {
-            return _db.Farmacias.ToList();
+            return await _db.Farmacias.ToListAsync();
         }
 
-        public Farmacia GetFarmaciaById(int FarmaciaId)
+        public async Task<Farmacia> GetFarmaciaById(int FarmaciaId)
         {
-            return _db.Farmacias.Find(FarmaciaId);
+            return await _db.Farmacias.FindAsync(FarmaciaId);
         }
 
-        public void UpdateFarmacia(Farmacia Farmacia)
+        public async Task UpdateFarmacia(Farmacia Farmacia)
         {
-            var far = _db.Farmacias.Find(Farmacia.Id);
+            var far = await _db.Farmacias.FindAsync(Farmacia.Id);
             far.Nombre = Farmacia.Nombre;
             far.Direccion = Farmacia.Direccion;
             far.Longitud = Farmacia.Longitud;

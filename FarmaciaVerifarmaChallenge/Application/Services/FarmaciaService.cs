@@ -1,4 +1,5 @@
-﻿using FarmaciaVerifarmaChallenge.Application.Interfaces;
+﻿using FarmaciaVerifarmaChallenge.Application.Dtos;
+using FarmaciaVerifarmaChallenge.Application.Interfaces;
 using FarmaciaVerifarmaChallenge.Domain.Entities;
 
 namespace FarmaciaVerifarmaChallenge.Application.Services
@@ -9,35 +10,42 @@ namespace FarmaciaVerifarmaChallenge.Application.Services
 
         public FarmaciaService(IFarmaciaRepository farmaciaRepository)
         {
-            this._farmaciaRepository = farmaciaRepository;
+            _farmaciaRepository = farmaciaRepository;
         }
 
-        public void AddFarmacia(Farmacia farmacia)
+        public async Task AddFarmacia(FarmaciaDto farmacia)
         {
-            throw new NotImplementedException();
+            var farmaciaEntity = new Farmacia()
+            {
+                Nombre = farmacia.Nombre,
+                Direccion = farmacia.Direccion,
+                Latitud = farmacia.Latitud,
+                Longitud = farmacia.Longitud
+            };
+            await _farmaciaRepository.AddFarmacia(farmaciaEntity);
         }
 
-        public void DeleteFarmacia(int farmaciaId)
+        public async Task DeleteFarmacia(int farmaciaId)
         {
-            throw new NotImplementedException();
+            await _farmaciaRepository.DeleteFarmacia(farmaciaId);
         }
 
-        public Farmacia GetFarmacia(int id)
+        public async Task<Farmacia> GetFarmacia(int id)
         {
-            throw new NotImplementedException();
+            return await _farmaciaRepository.GetFarmaciaById(id);
         }
 
-        public Farmacia GetFarmaciaById(int farmaciaId)
+        public async Task<Farmacia> GetFarmaciaById(int farmaciaId)
         {
-            throw new NotImplementedException();
+            return await _farmaciaRepository.GetFarmaciaById(farmaciaId);
         }
 
-        public IEnumerable<Farmacia> GetFarmacias()
+        public async Task<IEnumerable<Farmacia>> GetFarmacias()
         {
-            throw new NotImplementedException();
+            return await _farmaciaRepository.GetCategories();
         }
 
-        public void UpdateFarmacia(Farmacia farmacia)
+        public async Task UpdateFarmacia(Farmacia farmacia)
         {
             throw new NotImplementedException();
         }

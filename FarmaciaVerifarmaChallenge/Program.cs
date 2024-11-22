@@ -1,4 +1,5 @@
 using FarmaciaVerifarmaChallenge.Application.Interfaces;
+using FarmaciaVerifarmaChallenge.Application.Services;
 using FarmaciaVerifarmaChallenge.Infraestructure.Persistence;
 using FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IFarmaciaRepository, FarmaciaRepository>();
-
+builder.Services.AddScoped<IFarmaciaService, FarmaciaService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

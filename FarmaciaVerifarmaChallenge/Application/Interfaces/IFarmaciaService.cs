@@ -1,18 +1,19 @@
-﻿using FarmaciaVerifarmaChallenge.Domain.Entities;
+﻿using FarmaciaVerifarmaChallenge.Application.Dtos;
+using FarmaciaVerifarmaChallenge.Domain.Entities;
 
 namespace FarmaciaVerifarmaChallenge.Application.Interfaces
 {
     public interface IFarmaciaService
     {
-        public void AddFarmacia(Farmacia farmacia);
+        Task AddFarmacia(FarmaciaDto farmacia);
 
-        public Farmacia GetFarmaciaById(int farmaciaId);
+        Task<Farmacia> GetFarmaciaById(int farmaciaId);
 
-        public void DeleteFarmacia(int farmaciaId);
+        Task DeleteFarmacia(int farmaciaId);
 
-        public void UpdateFarmacia(Farmacia farmacia);
+        Task UpdateFarmacia(Farmacia farmacia);
 
-        public IEnumerable<Farmacia> GetFarmacias();
+        Task<IEnumerable<Farmacia>> GetFarmacias();
 
     }
 }
