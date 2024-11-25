@@ -1,14 +1,19 @@
 ﻿using FarmaciaVerifarmaChallenge.Application.Interfaces;
 using FarmaciaVerifarmaChallenge.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Repositories
+namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
 {
-    public class FarmaciaRepository: IFarmaciaRepository
+    public class FarmaciaRepository : IFarmaciaRepository
     {
-        private readonly ApplicationDbContext _db;
+        private readonly FarmaciaDbContext _db;
 
-        public FarmaciaRepository(ApplicationDbContext db)
+        public FarmaciaRepository(FarmaciaDbContext db)
         {
             this._db = db;
         }
@@ -24,7 +29,7 @@ namespace FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Repositories
             var Farmacia = await _db.Farmacias.FindAsync(farmaciaId);
             if (Farmacia == null) return;
 
-            _db.Farmacias.Remove(Farmacia); 
+            _db.Farmacias.Remove(Farmacia);
             await _db.SaveChangesAsync();
         }
 
@@ -57,7 +62,7 @@ namespace FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Repositories
         private static double CalculoDistancia(decimal latitudPaciente, decimal longitudPaciente, decimal latitudFarmacia, decimal longitudFarmacia)
         {
             decimal diferenciaLatitud = latitudFarmacia - latitudPaciente;
-            double diferenciaLongitud = (double)(longitudFarmacia - longitudPaciente) * 
+            double diferenciaLongitud = (double)(longitudFarmacia - longitudPaciente) *
                 Math.Cos((double)(latitudPaciente + latitudFarmacia) / 2 * Math.PI / 180);
 
             return Math.Sqrt(Math.Pow((double)diferenciaLatitud, 2) + Math.Pow(diferenciaLongitud, 2));

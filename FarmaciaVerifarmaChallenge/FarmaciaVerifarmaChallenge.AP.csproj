@@ -15,4 +15,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FarmaciaVerifarmaChallenge.Application\FarmaciaVerifarmaChallenge.Application.csproj" />
+    <ProjectReference Include="..\FarmaciaVerifarmaChallenge.Infrastructure\FarmaciaVerifarmaChallenge.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

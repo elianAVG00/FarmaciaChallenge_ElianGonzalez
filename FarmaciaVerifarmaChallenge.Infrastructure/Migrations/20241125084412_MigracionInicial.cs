@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace FarmaciaVerifarmaChallenge.Infraestructure.Persistence.Migrations
+namespace FarmaciaVerifarmaChallenge.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FarmaciaMigracionInicial : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

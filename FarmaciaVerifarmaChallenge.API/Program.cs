@@ -11,10 +11,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<FarmaciaDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Add services to the container.
 builder.Services.AddScoped<IFarmaciaRepository, FarmaciaRepository>();
 builder.Services.AddScoped<IFarmaciaService, FarmaciaService>();
-
-// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
