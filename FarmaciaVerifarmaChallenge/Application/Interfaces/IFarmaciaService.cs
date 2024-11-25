@@ -15,5 +15,7 @@ namespace FarmaciaVerifarmaChallenge.Application.Interfaces
 
         Task<IEnumerable<Farmacia>> GetFarmacias();
 
+        Task<Farmacia> GetFarmaciaPorCercania(decimal latitud, decimal longitud);
+
     }
 }

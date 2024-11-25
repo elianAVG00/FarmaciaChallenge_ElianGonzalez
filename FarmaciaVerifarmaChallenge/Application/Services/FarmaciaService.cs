@@ -22,7 +22,7 @@ namespace FarmaciaVerifarmaChallenge.Application.Services
                 Latitud = farmacia.Latitud,
                 Longitud = farmacia.Longitud
             };
-            await _farmaciaRepository.AddFarmacia(farmaciaEntity);
+            await _farmaciaRepository.AddFarmacia(farmaciaEntity    );
         }
 
         public async Task DeleteFarmacia(int farmaciaId)
@@ -47,7 +47,12 @@ namespace FarmaciaVerifarmaChallenge.Application.Services
 
         public async Task UpdateFarmacia(Farmacia farmacia)
         {
-            throw new NotImplementedException();
+            await _farmaciaRepository.UpdateFarmacia(farmacia);
+        }
+
+        public async Task<Farmacia> GetFarmaciaPorCercania(decimal latitud, decimal longitud)
+        {
+           return await _farmaciaRepository.GetFarmaciaPorCercania(latitud, longitud);
         }
     }
 }

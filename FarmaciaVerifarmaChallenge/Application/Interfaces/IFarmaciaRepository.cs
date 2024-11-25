@@ -5,9 +5,11 @@ namespace FarmaciaVerifarmaChallenge.Application.Interfaces
     public interface IFarmaciaRepository
     {
         Task<IEnumerable<Farmacia>> GetCategories();
-        Task AddFarmacia(Farmacia Farmacia);
-        Task UpdateFarmacia(Farmacia Farmacia);
-        Task<Farmacia> GetFarmaciaById(int FarmaciaId);
-        Task DeleteFarmacia(int FarmaciaId);
+        Task AddFarmacia(Farmacia farmacia);
+        Task UpdateFarmacia(Farmacia farmacia);
+        Task<Farmacia> GetFarmaciaById(int farmaciaId);
+        Task DeleteFarmacia(int farmaciaId);
+
+        Task<Farmacia> GetFarmaciaPorCercania(decimal latitud, decimal longitud);  
     }
 }

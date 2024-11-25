@@ -30,5 +30,12 @@ namespace FarmaciaVerifarmaChallenge.Presentation.Controllers
             var farmacia = await _farmaciaService.GetFarmaciaById(id);
             return Ok(farmacia);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Farmacia>> GetFarmaciaPorCercania([FromQuery] decimal lat, [FromQuery] decimal lon)
+        {
+            var farmacia = await _farmaciaService.GetFarmaciaPorCercania(lat, lon);
+            return Ok(farmacia);
+        }
     }
 }
