@@ -29,8 +29,14 @@ if (builder.Environment.IsDevelopment())
     });
 }
 
+
 var app = builder.Build();
 
+// Crear la base de datos automáticamente al iniciar la aplicación.
+using (var scope = app.Services.CreateScope()) { 
+    var dbContext = scope.ServiceProvider.GetRequiredService<FarmaciaDbContext>(); 
+    dbContext.Database.EnsureCreated(); 
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
