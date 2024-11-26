@@ -4,6 +4,7 @@ using FarmaciaVerifarmaChallenge.Infrastructure;
 using FarmaciaVerifarmaChallenge.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,11 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = " Web API crud farmacias y traer farmacias por cercania",
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+    c.EnableAnnotations();
 });
 
 Log.Logger = new LoggerConfiguration()
@@ -51,7 +57,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Farmacias CRUD | Verifarma");
+        c.RoutePrefix = "swagger"; 
+    });
 }
 app.UseSerilogRequestLogging();
 
