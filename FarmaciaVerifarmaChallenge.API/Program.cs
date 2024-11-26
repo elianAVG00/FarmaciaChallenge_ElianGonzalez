@@ -20,6 +20,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configura Kestrel antes de construir la aplicación.
+if (builder.Environment.IsDevelopment())
+{
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(8080); // Puerto para HTTP
+    });
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,10 +36,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    builder.WebHost.ConfigureKestrel(options =>
-    {
-        options.ListenAnyIP(8080); // Puerto para HTTP
-    });
 }
 app.UseHttpsRedirection();
 
