@@ -23,4 +23,4 @@ services:
     depends_on:
         - sqlserverdocker
     ports:
-        - 5001:8081
+        - 8080:8080
