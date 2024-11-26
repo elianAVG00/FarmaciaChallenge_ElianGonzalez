@@ -1,9 +1,8 @@
-using FarmaciaVerifarmaChallenge.Application.Interfaces;
+ï»¿using FarmaciaVerifarmaChallenge.Application.Interfaces;
 using FarmaciaVerifarmaChallenge.Application.Services;
 using FarmaciaVerifarmaChallenge.Infrastructure;
 using FarmaciaVerifarmaChallenge.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ??
     builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<FarmaciaDbContext>(options =>
-    options.UseSqlServer(connectionString, sqlOptions =>
-        sqlOptions.EnableRetryOnFailure())); 
+    options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddScoped<IFarmaciaRepository, FarmaciaRepository>();
@@ -22,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configura Kestrel antes de construir la aplicación.
+// Configura Kestrel antes de construir la aplicaciÃ³n.
 if (builder.Environment.IsDevelopment())
 {
     builder.WebHost.ConfigureKestrel(options =>
@@ -34,11 +32,6 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// Crear la base de datos automáticamente al iniciar la aplicación.
-using (var scope = app.Services.CreateScope()) { 
-    var dbContext = scope.ServiceProvider.GetRequiredService<FarmaciaDbContext>(); 
-    dbContext.Database.EnsureCreated(); 
-}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

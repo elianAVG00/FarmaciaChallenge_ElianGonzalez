@@ -10,10 +10,6 @@ services:
     environment:
        - ACCEPT_EULA=Y
        - MSSQL_SA_PASSWORD=MyPassword*1234
-    healthcheck:
-      test: ["CMD", "sqlcmd", "-S", "localhost", "-U", "sa", "-P", "MyPassword*1234", "-Q", "SELECT 1"]
-      interval: 10s
-      retries: 5
     networks:
         - mynetworkapi
 
