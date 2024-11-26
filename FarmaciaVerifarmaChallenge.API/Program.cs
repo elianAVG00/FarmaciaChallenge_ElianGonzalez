@@ -28,10 +28,6 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = " Web API crud farmacias y traer farmacias por cercania",
     });
-
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
     c.EnableAnnotations();
 });
 
