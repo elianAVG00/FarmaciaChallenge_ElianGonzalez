@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmaciaVerifarmaChallenge.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A9635417-EF50-4778-9BE2-912822FF14FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmaciaVerifarmaChallenge.Tests", "FarmaciaVerifarmaChallenge.Tests\FarmaciaVerifarmaChallenge.Tests.csproj", "{EBBD4F97-2A5A-4D33-91AE-54639A5FA3EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A9635417-EF50-4778-9BE2-912822FF14FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9635417-EF50-4778-9BE2-912822FF14FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9635417-EF50-4778-9BE2-912822FF14FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBD4F97-2A5A-4D33-91AE-54639A5FA3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBD4F97-2A5A-4D33-91AE-54639A5FA3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBD4F97-2A5A-4D33-91AE-54639A5FA3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBD4F97-2A5A-4D33-91AE-54639A5FA3EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
