@@ -29,7 +29,7 @@ Tener instalado de antes:
 1. **Clonar el Repositorio:**
 
    ```bash
-   git clone https://github.com/tuusuario/farmacia-api-dotnet.git
+   git clone https://github.com/elianAVG00/FarmaciaChallenge_ElianGonzalez.git
    cd FarmaciaVerifarmaChallenge
    ```
 
