@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["FarmaciaVerifarmaChallenge.API/FarmaciaVerifarmaChallenge.API.csproj", "FarmaciaVerifarmaChallenge.API/"]
-COPY ["FarmaciaVerifarmaChallenge.Application/FarmaciaVerifarmaChallenge.Application.csproj", "FarmaciaVerifarmaChallenge.Application/"]
-COPY ["FarmaciaVerifarmaChallenge.Domain/FarmaciaVerifarmaChallenge.Domain.csproj", "FarmaciaVerifarmaChallenge.Domain/"]
-COPY ["FarmaciaVerifarmaChallenge.Infrastructure/FarmaciaVerifarmaChallenge.Infrastructure.csproj", "FarmaciaVerifarmaChallenge.Infrastructure/"]
+COPY ["../FarmaciaVerifarmaChallenge.API/FarmaciaVerifarmaChallenge.API.csproj", "FarmaciaVerifarmaChallenge.API/"]
+COPY ["../FarmaciaVerifarmaChallenge.Application/FarmaciaVerifarmaChallenge.Application.csproj", "FarmaciaVerifarmaChallenge.Application/"]
+COPY ["../FarmaciaVerifarmaChallenge.Domain/FarmaciaVerifarmaChallenge.Domain.csproj", "FarmaciaVerifarmaChallenge.Domain/"]
+COPY ["../FarmaciaVerifarmaChallenge.Infrastructure/FarmaciaVerifarmaChallenge.Infrastructure.csproj", "FarmaciaVerifarmaChallenge.Infrastructure/"]
 RUN dotnet restore "./FarmaciaVerifarmaChallenge.API/FarmaciaVerifarmaChallenge.API.csproj"
 COPY . .
 WORKDIR "/src/FarmaciaVerifarmaChallenge.API"
