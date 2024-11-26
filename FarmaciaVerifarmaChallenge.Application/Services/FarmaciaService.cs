@@ -42,20 +42,24 @@ namespace FarmaciaVerifarmaChallenge.Application.Services
 
         public async Task<FarmaciaDto> GetFarmaciaById(int farmaciaId)
         {
-            var farmacia = await _farmaciaRepository.GetFarmaciaById(farmaciaId);
-            var farmaciaDto = new FarmaciaDto();
-            if (farmacia != null)
+            try
             {
-                farmaciaDto = new FarmaciaDto()
+                var farmacia = await _farmaciaRepository.GetFarmaciaById(farmaciaId);
+                if (farmacia == null)
                 {
-                    Nombre = farmacia.Nombre,
-                    Direccion = farmacia.Direccion,
-                    Latitud = farmacia.Latitud,
-                    Longitud = farmacia.Longitud
-                };
+                    _logger.LogWarning("No existe la farmacia con id {FarmaciaId}", farmaciaId);
+                    return null;
+                }
+                var farmaciaDto = new FarmaciaDto { Nombre = farmacia.Nombre, Direccion = farmacia.Direccion, 
+                    Latitud = farmacia.Latitud, Longitud = farmacia.Longitud };
+                _logger.LogInformation("Farmacia encontrada {FarmaciaDto}", farmaciaDto); return farmaciaDto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener la farmacia con ID: {FarmaciaId}", farmaciaId); 
+                throw;
             }
 
-            return farmaciaDto;
         }
 
         public async Task<IEnumerable<FarmaciaDto>> GetFarmacias()
@@ -83,20 +87,28 @@ namespace FarmaciaVerifarmaChallenge.Application.Services
 
         public async Task<FarmaciaDto> GetFarmaciaPorCercania(decimal latitud, decimal longitud)
         {
-            ValidarCordenadas(latitud, longitud);
-            var farmacia = await _farmaciaRepository.GetFarmaciaPorCercania(latitud, longitud);
-            var farmaciaDto = new FarmaciaDto();
-            if (farmacia != null)
+            try
             {
-                farmaciaDto = new FarmaciaDto()
+                var farmacia = await _farmaciaRepository.GetFarmaciaPorCercania(latitud, longitud);
+                if (farmacia == null)
+                {
+                    _logger.LogWarning("No se ha encontrado farmacia cercana");
+                    return null;
+                }
+                var farmaciaDto = new FarmaciaDto
                 {
                     Nombre = farmacia.Nombre,
                     Direccion = farmacia.Direccion,
                     Latitud = farmacia.Latitud,
                     Longitud = farmacia.Longitud
                 };
+                _logger.LogInformation("Farmacia encontrada {FarmaciaDto}", farmaciaDto); return farmaciaDto;
             }
-            return farmaciaDto;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al buscar farmacia mas cercana"); 
+                throw;
+            }
         }
 
         private void ValidarCordenadas(decimal latitud, decimal longitud)
