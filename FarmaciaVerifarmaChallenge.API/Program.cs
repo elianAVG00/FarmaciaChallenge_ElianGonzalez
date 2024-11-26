@@ -3,6 +3,7 @@ using FarmaciaVerifarmaChallenge.Application.Services;
 using FarmaciaVerifarmaChallenge.Infrastructure;
 using FarmaciaVerifarmaChallenge.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,22 @@ builder.Services.AddScoped<IFarmaciaService, FarmaciaService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Farmacia Verifarma API",
+        Version = "v1",
+        Description = " Web API crud farmacias y traer farmacias por cercania",
+    });
+});
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("log.txt",
+        rollingInterval: RollingInterval.Day,
+        rollOnFileSizeLimit: true)
+    .CreateLogger();
 
 // Configura Kestrel antes de construir la aplicación.
 if (builder.Environment.IsDevelopment())
