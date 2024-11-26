@@ -86,28 +86,30 @@ Ejemplo de `docker-compose.yml`:
 
 ```yaml
 
-services:
-  api:
-    build:
-      context: .
-      dockerfile: src/FarmaciaVerifarmaChallenge.API/Dockerfile
-    ports:
-      - "5000:5000"
-    depends_on:
-      - db
-    environment:
-      - ConnectionStrings__DefaultConnection=Server=db;Database=FarmaciaDB;User=sa;Password=Your_password123;
+networks:
+  mynetworkapi:
 
-  db:
+services:
+  sqlserverdocker:
+    container_name: sql-server-docker
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
-      - "1433:1433"
+       - 8006:1433
     environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
-    volumes:
-      - dbdata:/var/opt/mssql
+       - ACCEPT_EULA=Y
+       - MSSQL_SA_PASSWORD=MyPassword*1234
+    networks:
+        - mynetworkapi
 
-volumes:
-  dbdata:
+  farmaciaverifarmachallenge.api:
+    image: ${DOCKER_REGISTRY-}farmaciaverifarmachallengeapi
+    build:
+        context: .
+        dockerfile: FarmaciaVerifarmaChallenge.API/Dockerfile
+    networks:
+        - mynetworkapi
+    depends_on:
+        - sqlserverdocker
+    ports:
+        - 8080:8080
 ```
