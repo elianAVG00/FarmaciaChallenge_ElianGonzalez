@@ -3,6 +3,7 @@ using FarmaciaVerifarmaChallenge.Application.Services;
 using FarmaciaVerifarmaChallenge.Infrastructure;
 using FarmaciaVerifarmaChallenge.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ??
     builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<FarmaciaDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, sqlOptions =>
+        sqlOptions.EnableRetryOnFailure())); 
 
 // Add services to the container.
 builder.Services.AddScoped<IFarmaciaRepository, FarmaciaRepository>();
