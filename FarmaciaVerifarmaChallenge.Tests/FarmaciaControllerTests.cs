@@ -26,16 +26,15 @@ public class FarmaciaControllerTests
     public async Task AddFarmacia_ShouldReturnOkResult_WhenAddFarmacia()
     {
         // Arrange
-        var farmacia = new FarmaciaDto { Nombre = "FarmaciaVerifarma", Direccion = "SanMArtin 123" };
-        _mockFarmaciaService.Setup(s => s.AddFarmacia(It.IsAny<FarmaciaDto>()));
+        var farmacia = new FarmaciaDto { Nombre = "FarmaciaVerifarma", Direccion = "San Martin 123" };
+        _mockFarmaciaService.Setup(s => s.AddFarmacia(farmacia));
 
         // Act
         var result = await _controller.AddFarmacia(farmacia);
 
         // Assert
-        var actionResult = Assert.IsType<CreatedAtActionResult>(result);
-        var returnValue = Assert.IsType<Farmacia>(actionResult.Value);
-        Assert.Equal("Farmacia Central", returnValue.Nombre);
+        var okResult = Assert.IsType<OkResult>(result);
+        Assert.Equal(200, okResult.StatusCode);
     }
 
     [Fact]
@@ -45,10 +44,12 @@ public class FarmaciaControllerTests
         FarmaciaDto farmacia = null;
 
         // Act
+        _mockFarmaciaService.Setup(s => s.AddFarmacia(farmacia)).ThrowsAsync(new ArgumentNullException());
         var result = await _controller.AddFarmacia(farmacia);
 
         // Assert
-        Assert.IsType<BadRequestResult>(result);
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+        Assert.Equal(400, badRequestResult.StatusCode);
     }
 
     [Fact]
@@ -57,20 +58,16 @@ public class FarmaciaControllerTests
         // Arrange
         var latitud = 34;
         var longitud = -58;
-        var farmacias = new List<Farmacia>
-        {
-            new Farmacia { Id = 1, Nombre = "Farmacia A", Latitud = 65, Longitud = 58 },
-            new Farmacia { Id = 2, Nombre = "Farmacia B", Latitud = 34, Longitud = 58 }
-        };
+        var farmacia = new FarmaciaDto { Nombre = "Farmacia Verifarma", Direccion = "SanMArtin 123", Latitud = 23, Longitud = -40 };
 
-        _mockFarmaciaService.Setup(s => s.GetFarmaciaPorCercania(latitud, longitud));
+        _mockFarmaciaService.Setup(s => s.GetFarmaciaPorCercania(latitud, longitud)).ReturnsAsync(farmacia);
 
         // Act
-        var result = await _controller.GetFarmaciaPorCercania(latitud, longitud);
+        var actionResult = await _controller.GetFarmaciaPorCercania(latitud, longitud);
 
         // Assert
-        var actionResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<List<Farmacia>>(actionResult.Value);
-        Assert.Equal(2, returnValue.Count);
+        var result = Assert.IsType<OkObjectResult>(actionResult.Result);
+        var returnValue = Assert.IsType<FarmaciaDto>(result.Value);
+        Assert.Equal("Farmacia Verifarma", returnValue.Nombre);
     }
 }
