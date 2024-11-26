@@ -31,10 +31,9 @@ builder.Services.AddSwaggerGen(c =>
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("log.txt",
-        rollingInterval: RollingInterval.Day,
-        rollOnFileSizeLimit: true)
     .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Configura Kestrel antes de construir la aplicación.
 if (builder.Environment.IsDevelopment())
@@ -54,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

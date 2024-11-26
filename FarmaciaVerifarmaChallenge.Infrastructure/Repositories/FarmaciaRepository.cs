@@ -1,6 +1,7 @@
 ﻿using FarmaciaVerifarmaChallenge.Application.Interfaces;
 using FarmaciaVerifarmaChallenge.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
@@ -8,9 +9,9 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
     public class FarmaciaRepository : IFarmaciaRepository
     {
         private readonly FarmaciaDbContext _db;
-        private readonly ILogger _logger;
+        private readonly ILogger<IFarmaciaRepository> _logger;
 
-        public FarmaciaRepository(FarmaciaDbContext db, ILogger logger)
+        public FarmaciaRepository(FarmaciaDbContext db, ILogger<IFarmaciaRepository> logger)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -24,11 +25,11 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
             {
                 await _db.Farmacias.AddAsync(farmacia);
                 await _db.SaveChangesAsync();
-                _logger.Information("Farmacia agregada con éxito: {@farmacia}", farmacia);
+                _logger.LogInformation("Farmacia agregada con éxito: {@farmacia}", farmacia);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al agregar la farmacia: {@farmacia}", farmacia);
+                _logger.LogError(ex, "Error al agregar la farmacia: {@farmacia}", farmacia);
                 throw;
             }
         }
@@ -40,17 +41,17 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
                 var farmacia = await _db.Farmacias.FindAsync(farmaciaId);
                 if (farmacia == null)
                 {
-                    _logger.Warning("No existe la farmaca {farmaciaId}.", farmaciaId);
+                    _logger.LogWarning("No existe la farmaca {farmaciaId}.", farmaciaId);
                     return;
                 }
 
                 _db.Farmacias.Remove(farmacia);
                 await _db.SaveChangesAsync();
-                _logger.Information("Farmacia eliminada con exito: {@farmacia}", farmacia);
+                _logger.LogInformation("Farmacia eliminada con exito: {@farmacia}", farmacia);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al eliminar la farmacia {farmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error al eliminar la farmacia {farmaciaId}", farmaciaId);
                 throw;
             }
         }
@@ -63,7 +64,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al traerse todas las farmacias");
+                _logger.LogError(ex, "Error al traerse todas las farmacias");
                 throw;
             }
         }
@@ -75,13 +76,13 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
                 var farmacia = await _db.Farmacias.FindAsync(farmaciaId);
                 if (farmacia == null)
                 {
-                    _logger.Warning("No existe la farmacia {farmaciaId}", farmaciaId);
+                    _logger.LogWarning("No existe la farmacia {farmaciaId}", farmaciaId);
                 }
                 return farmacia;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al trae la farmacia {farmaciaId}", farmaciaId);
+                _logger.LogError(ex, "Error al trae la farmacia {farmaciaId}", farmaciaId);
                 throw;
             }
         }
@@ -95,7 +96,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
                 var farmaciaDb = await _db.Farmacias.FindAsync(farmacia.Id);
                 if (farmaciaDb == null)
                 {
-                    _logger.Warning("No existe la farmacia {farmaciaId}", farmacia.Id);
+                    _logger.LogWarning("No existe la farmacia {farmaciaId}", farmacia.Id);
                     return;
                 }
 
@@ -105,11 +106,11 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
                 farmaciaDb.Longitud = farmacia.Longitud;
 
                 await _db.SaveChangesAsync();
-                _logger.Information("Farmacia actualizada {@farmacia}", farmacia);
+                _logger.LogInformation("Farmacia actualizada {@farmacia}", farmacia);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al actualizar la farmacia {@farmacia}", farmacia);
+                _logger.LogError(ex, "Error al actualizar la farmacia {@farmacia}", farmacia);
                 throw;
             }
         }
@@ -122,7 +123,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
 
                 if (!farmacias.Any())
                 {
-                    _logger.Warning("No se encontraron farmacias en la base de datos.");
+                    _logger.LogWarning("No se encontraron farmacias en la base de datos.");
                     return null;
                 }
 
@@ -131,7 +132,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
 
                 if (farmaciaMasCercana == null)
                 {
-                    _logger.Warning("Error al traer la farmacias mas cercana");
+                    _logger.LogWarning("Error al traer la farmacias mas cercana");
                     return null;
                 }
 
@@ -139,7 +140,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al traer la farmacias mas cercana");
+                _logger.LogError(ex, "Error al traer la farmacias mas cercana");
                 throw;
             }
         }
