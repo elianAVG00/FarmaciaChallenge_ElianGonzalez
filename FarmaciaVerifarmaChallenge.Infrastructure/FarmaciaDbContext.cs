@@ -13,24 +13,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure
     public class FarmaciaDbContext : DbContext
     {
         public FarmaciaDbContext(DbContextOptions<FarmaciaDbContext> options)
-            : base(options)
-        {
-            try
-            {
-                var dbCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-                if (dbCreator != null)
-                {
-                    if (!dbCreator.CanConnect())
-                        dbCreator.Create();
-                    if (!dbCreator.HasTables())
-                        dbCreator.CreateTables();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
+            : base(options) {}
 
         public DbSet<Farmacia> Farmacias { get; set; }
     }

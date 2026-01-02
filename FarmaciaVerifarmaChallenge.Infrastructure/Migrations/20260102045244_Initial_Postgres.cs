@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace FarmaciaVerifarmaChallenge.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionInicial : Migration
+    public partial class Initial_Postgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,12 +15,12 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Migrations
                 name: "Farmacias",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Latitud = table.Column<decimal>(type: "decimal(8,5)", nullable: false),
-                    Longitud = table.Column<decimal>(type: "decimal(9,5)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Direccion = table.Column<string>(type: "text", nullable: false),
+                    Latitud = table.Column<decimal>(type: "numeric(8,5)", nullable: false),
+                    Longitud = table.Column<decimal>(type: "numeric(9,5)", nullable: false)
                 },
                 constraints: table =>
                 {

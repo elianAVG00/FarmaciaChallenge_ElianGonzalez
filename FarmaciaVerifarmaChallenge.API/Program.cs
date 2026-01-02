@@ -9,10 +9,10 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Agrego la dbContext
-var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ??
-    builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<FarmaciaDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
+
 
 // Add services to the container.
 builder.Services.AddScoped<IFarmaciaRepository, FarmaciaRepository>();
@@ -48,6 +48,12 @@ if (builder.Environment.IsDevelopment())
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<FarmaciaDbContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
