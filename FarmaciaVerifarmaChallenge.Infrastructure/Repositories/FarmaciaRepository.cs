@@ -10,7 +10,7 @@ namespace FarmaciaVerifarmaChallenge.Infrastructure.Repositories
     {
         private readonly FarmaciaDbContext _db;
         private readonly ILogger<IFarmaciaRepository> _logger;
-
+        
         public FarmaciaRepository(FarmaciaDbContext db, ILogger<IFarmaciaRepository> logger)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));

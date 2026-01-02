@@ -111,7 +111,7 @@ namespace FarmaciaVerifarmaChallenge.Application.Services
             }
         }
 
-        private void ValidarCordenadas(decimal latitud, decimal longitud)
+        private static void ValidarCordenadas(decimal latitud, decimal longitud)
         {
             if (latitud < -90 || latitud > 90)
                 throw new ArgumentOutOfRangeException(nameof(latitud), "La latitud debe estar entre -90 y 90 grados");
