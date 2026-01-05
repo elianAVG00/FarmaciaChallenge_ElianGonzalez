@@ -4,7 +4,7 @@ using Moq;
 using Xunit;
 using FarmaciaVerifarmaChallenge.Application.Interfaces;
 using FarmaciaVerifarmaChallenge.Domain.Entities;
-using FarmaciaVerifarmaChallenge.API.Controllers;
+using FarmaciaVerifarmaChallenge.Presentation.Controllers;
 using Microsoft.Extensions.Logging;
 using FarmaciaVerifarmaChallenge.Application.Dtos;
 using Microsoft.AspNetCore.Mvc;

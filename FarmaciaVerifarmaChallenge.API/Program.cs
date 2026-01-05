@@ -9,10 +9,12 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Agrego la dbContext
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<FarmaciaDbContext>(options =>
     options.UseNpgsql(connectionString));
-
 
 // Add services to the container.
 builder.Services.AddScoped<IFarmaciaRepository, FarmaciaRepository>();
@@ -20,16 +22,7 @@ builder.Services.AddScoped<IFarmaciaService, FarmaciaService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "Farmacia Verifarma API",
-        Version = "v1",
-        Description = " Web API crud farmacias y traer farmacias por cercania",
-    });
-    c.EnableAnnotations();
-});
+builder.Services.AddSwaggerGen();
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -45,7 +38,6 @@ if (builder.Environment.IsDevelopment())
         options.ListenAnyIP(8080); // Puerto para HTTP
     });
 }
-
 
 var app = builder.Build();
 
@@ -74,3 +66,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

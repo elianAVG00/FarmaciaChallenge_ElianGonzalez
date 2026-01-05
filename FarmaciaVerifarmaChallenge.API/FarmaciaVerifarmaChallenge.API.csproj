@@ -16,12 +16,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FarmaciaVerifarmaChallenge.Presentation\FarmaciaVerifarmaChallenge.Presentation.csproj" />
     <ProjectReference Include="..\FarmaciaVerifarmaChallenge.Application\FarmaciaVerifarmaChallenge.Application.csproj" />
     <ProjectReference Include="..\FarmaciaVerifarmaChallenge.Infrastructure\FarmaciaVerifarmaChallenge.Infrastructure.csproj" />
   </ItemGroup>

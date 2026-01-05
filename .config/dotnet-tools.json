@@ -8,6 +8,13 @@
         "dotnet-ef"
       ],
       "rollForward": false
+    },
+    "amazon.lambda.tools": {
+      "version": "6.0.3",
+      "commands": [
+        "dotnet-lambda"
+      ],
+      "rollForward": false
     }
   }
 }
